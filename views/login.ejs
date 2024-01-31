@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Your App</title>
+  </head>
+  <body>
+    <!-- Your application content -->
+
+    <div id="auth0-lock-container"></div>
+
+    <script src="https://cdn.auth0.com/js/lock/11.27/lock.min.js"></script>
+    <script>
+      var lock = new Auth0Lock("YOUR_CLIENT_ID", "YOUR_AUTH0_DOMAIN", {
+        container: "auth0-lock-container",
+      });
+
+      document
+        .getElementById("show-login-btn")
+        .addEventListener("click", function () {
+          lock.show();
+        });
+    </script>
+  </body>
+</html>
