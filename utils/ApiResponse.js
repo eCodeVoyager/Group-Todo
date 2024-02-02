@@ -1,3 +1,5 @@
+//API response class
+
 function ApiResponse(statusCode, data, message) {
     this.statusCode = statusCode;
     this.data = data;

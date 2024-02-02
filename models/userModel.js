@@ -13,6 +13,10 @@ const userSchema = new mongoose.Schema({
     trim: true,
     lowercase: true,
   },
+  email_verified: {
+    type: Boolean,
+    default: false,
+  },
 
   password: {
     type: String,
@@ -30,7 +34,7 @@ const userSchema = new mongoose.Schema({
     default: "",
   },
   profilePicture: {
-    type: String, // Assuming the profile picture is stored as a URL
+    type: String, //  profile picture is stored as a URL from Cloudinary
     default: "default-profile-picture.jpg", // Default picture if the user doesn't upload one
   },
 

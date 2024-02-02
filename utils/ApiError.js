@@ -1,3 +1,4 @@
+//helper class to handle errors
 function ApiError(statusCode, message, errors, stack) {
   Error.call(this, message);
   this.statusCode = statusCode;
