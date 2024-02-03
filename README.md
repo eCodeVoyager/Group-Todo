@@ -1,7 +1,7 @@
-
+[{base_url}] : https://group-todo-backend.azurewebsites.net/
 
 ### Login
-**Endpoint:** `POST localhost:3000/api/v1/user/login`
+**Endpoint:** `POST [{base_url}]/api/v1/user/login`
 
 **Body:**
 ```json
@@ -12,14 +12,14 @@
 ```
 
 ### Logout
-**Endpoint:** `POST localhost:3000/api/v1/user/logout`
+**Endpoint:** `POST [{base_url}]/api/v1/user/logout`
 
-**Authorization:** API Key
+**Authorization:** JWT 
 
-*This request is using an authorization helper from collection API documentation*
+
 
 ### Register
-**Endpoint:** `POST localhost:3000/api/v1/user/register`
+**Endpoint:** `POST [{base_url}]/api/v1/user/register`
 
 **Authorization:** API Key
 
@@ -34,4 +34,4 @@
 }
 ```
 
-Make sure to replace API Key with the actual authorization token when making requests.
+
