@@ -6,7 +6,7 @@ require("dotenv").config();
 //User Schema
 const userSchema = new mongoose.Schema({
   // Authentication-related fields
-  username: {
+  email: {
     type: String,
     required: true,
     unique: true,
@@ -17,16 +17,24 @@ const userSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  emailVerificationSecret: {
+    type: String,
+    default: "",
+  },
 
   password: {
     type: String,
     required: true,
   },
+  refresh_token: {
+    type: String,
+    default: "",
+  },
 
   // Profile-related fields
   name: {
     type: String,
-    default: "",
+    required: true,
   },
 
   bio: {
@@ -37,7 +45,13 @@ const userSchema = new mongoose.Schema({
     type: String, //  profile picture is stored as a URL from Cloudinary
     default: "default-profile-picture.jpg", // Default picture if the user doesn't upload one
   },
-
+   //Notes
+  notes: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Note",
+    },
+  ],
   // Timestamps
   created_at: {
     type: Date,
@@ -72,7 +86,7 @@ userSchema.methods.generateAccessToken = async function () {
     { _id: user._id, username: user.username },
     process.env.ACCESS_TOKEN_SECRET,
     {
-      expiresIn: process.env.ACCESS_TOKEN_EXPIRY,
+      expiresIn: process.env.ACCESS_TOKEN_EXPIRE,
     }
   );
 };
@@ -80,7 +94,7 @@ userSchema.methods.generateAccessToken = async function () {
 userSchema.methods.generateRefreshToken = async function () {
   const user = this;
   return await jwt.sign({ _id: user._id }, process.env.REFRESH_TOKEN_SECRET, {
-    expiresIn: process.env.REFRESH_TOKEN_EXPIRY,
+    expiresIn: process.env.REFRESH_TOKEN_EXPIRE,
   });
 };
 
