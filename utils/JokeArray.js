@@ -1,10 +1,11 @@
-const asyncHandler = require("../utils/asyncHandler");
 
-const JokeArray = asyncHandler(async (req, res) => {
+
+const JokeArray = async (req, res,next) => {
   res.send({
     success: true,
     error: true,
     message: "Joke On You Salman || Sanaur. Read APIs Doc :) !",
   });
-});
+  next();
+};
 module.exports = { JokeArray };

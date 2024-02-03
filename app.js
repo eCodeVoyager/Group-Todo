@@ -13,6 +13,7 @@ const flash = require("connect-flash");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const connectDB = require("./db/connection.db");
+const { JokeArray } = require("./utils/JokeArray");
 
 var app = express();
 connectDB();

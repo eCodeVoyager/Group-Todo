@@ -16,6 +16,9 @@ const isUserLoggedin = require("../middlewares/isUserLoggedin.middleware");
 noteRouter.post("/create", isUserLoggedin ,createNote);
 noteRouter.get("/getnotes", isUserLoggedin, getNotes);
 
-noteRouter.use(errorHandler);
+noteRouter.use((req, res, next) => {
+  res.status(404).json({ success: false, error: "Route not found" });
+});
+
 
 module.exports = noteRouter;
