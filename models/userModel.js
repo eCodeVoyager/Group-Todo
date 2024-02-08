@@ -21,6 +21,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: "",
   },
+  passwordResetOTP: {
+    type: String,
+    default: "",
+  },
 
   password: {
     type: String,
@@ -45,7 +49,7 @@ const userSchema = new mongoose.Schema({
     type: String, //  profile picture is stored as a URL from Cloudinary
     default: "default-profile-picture.jpg", // Default picture if the user doesn't upload one
   },
-   //Notes
+  //Notes
   notes: [
     {
       type: mongoose.Schema.Types.ObjectId,

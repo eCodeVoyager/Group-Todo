@@ -1,15 +1,13 @@
 const nodemailer = require("nodemailer");
 
 const transporter = nodemailer.createTransport({
-  host: "smtppro.zoho.com",
-  port: 465,
+  host: process.env.SMTP_HOST,
+  port: process.env.SMTP_PORT,
   secure: true,
   auth: {
-    user: "donotreplay@rootslib.me",
-    pass: "alehsa.144.comM",
+    user: process.env.SMTP_USER,
+    pass: process.env.SMTP_PASS,
   },
 });
 
-
 module.exports = transporter;
-

@@ -1,11 +1,9 @@
-
-
-const JokeArray = async (req, res,next) => {
-  res.send({
+const JokeArray = async (req, res) => {
+  res.json({
     success: true,
     error: true,
-    message: "Joke On You Salman || Sanaur. Read APIs Doc :) !",
+    message: "Joke On You Salman || Sanaur Bhai. Read APIs Doc :) !",
   });
-  next();
 };
+
 module.exports = { JokeArray };

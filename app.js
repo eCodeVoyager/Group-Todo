@@ -15,7 +15,9 @@ const cors = require("cors");
 const connectDB = require("./db/connection.db");
 const { JokeArray } = require("./utils/JokeArray");
 
+
 var app = express();
+
 connectDB();
 
 //Code Start
@@ -50,9 +52,10 @@ app.use(function (err, req, res, next) {
   res.locals.message = err.message;
   res.locals.error = req.app.get("env") === "development" ? err : {};
 
-  // render the error page
+  //
   res.status(err.status || 500);
-  res.render("error");
+  res.json({ error: err.message });
+ 
 });
 
 module.exports = app;

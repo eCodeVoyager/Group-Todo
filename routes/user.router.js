@@ -9,14 +9,15 @@ const {
 } = require("../controllers/user.controller");
 const { JokeArray } = require("../utils/JokeArray");
 const isUserLoggedin = require("../middlewares/isUserLoggedin.middleware");
-const { OTPMailer } = require("../middlewares/OtpMailer.middleware");
-const {verifyEmailWithOTP} = require("../middlewares/EmailVerifyOTP.middleware");
 
+const { verifyPasswordResetOTP, sendPasswordResetOTP } = require("../middlewares/PassReset.middleware");
 //user registration route
 userRouter.post("/register", userRegistration);
 userRouter.post("/login", userLogin);
-userRouter.post("/sent", OTPMailer);
-userRouter.post("/verify", verifyEmailWithOTP);
+userRouter.post("/verify", verifyPasswordResetOTP, userPasswordReset);
+userRouter.post("/reset", sendPasswordResetOTP);
+
+
 
 //Secure routes
 userRouter.post("/logout", isUserLoggedin, userLogout);

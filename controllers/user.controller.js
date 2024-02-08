@@ -173,20 +173,19 @@ const userLogout = asyncHandler(async (req, res) => {
 //user Password reset controller
 const userPasswordReset = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
-  //verify if email and password are provided
-  if (!email || !password) {
-    throw new ApiError(
-      400,
-      "Failed to reset password",
-      "Missing email or password"
-    );
+
+  // Verify if email is provided
+  if (!email) {
+    throw new ApiError(400, "Failed to reset password", "Missing email");
   }
-  //verify if email exists
+
+  // Verify if email exists
   const user = await userModel.User.findOne({ email });
 
   if (!user) {
     throw new ApiError(404, "Failed To Reset Password", "User Not Found");
   }
+
   // Verify if the password is at least 8 characters long
   if (password.length < 8) {
     throw new ApiError(
@@ -195,14 +194,68 @@ const userPasswordReset = asyncHandler(async (req, res) => {
       "Password must be at least 8 characters long"
     );
   }
-  // change user pass in the db
+
+  // Verify if the new password is different from the old password
+  if (user.password === password) {
+    throw new ApiError(
+      400,
+      "Failed To Reset Password",
+      "New password must be different from the old password"
+    );
+  }
+
+  // Change user password in the database
   user.password = password;
+  user.passwordResetOTP = null;
+  user.emailVerificationSecret = null;
   user.updated_at = Date.now();
+
   await user.save({ validateBeforeSave: false });
+
+  // Send success response
   return res.status(200).json({
     success: true,
     message: "Password Reset Successfully",
   });
 });
 
-module.exports = { userRegistration, userLogin, userLogout, userPasswordReset };
+// Email verification controller
+const verifyEmail = asyncHandler(async (req, res) => {
+  const { token } = req.query;
+
+  if (!token) {
+    throw new ApiError(
+      400,
+      "Invalid token",
+      "Token is required for email verification"
+    );
+  }
+
+  const user = await userModel.User.findOne({ emailVerificationSecret: token });
+
+  if (!user) {
+    throw new ApiError(
+      404,
+      "User not found",
+      "No user found for the provided token"
+    );
+  }
+
+  // Mark the user as verified and remove the verification token
+  user.email_verified = true;
+  user.emailVerificationSecret = undefined;
+  await user.save();
+
+  return res.status(200).json({
+    success: true,
+    message: "Email verified successfully.",
+  });
+});
+
+module.exports = {
+  userRegistration,
+  userLogin,
+  userLogout,
+  userPasswordReset,
+  verifyEmail,
+};
