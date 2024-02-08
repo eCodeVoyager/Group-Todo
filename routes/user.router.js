@@ -10,14 +10,15 @@ const {
 const { JokeArray } = require("../utils/JokeArray");
 const isUserLoggedin = require("../middlewares/isUserLoggedin.middleware");
 
-const { verifyPasswordResetOTP, sendPasswordResetOTP } = require("../middlewares/PassReset.middleware");
+const {
+  verifyPasswordResetOTP,
+  sendPasswordResetOTP,
+} = require("../middlewares/PassReset.middleware");
 //user registration route
 userRouter.post("/register", userRegistration);
 userRouter.post("/login", userLogin);
-userRouter.post("/verify", verifyPasswordResetOTP, userPasswordReset);
-userRouter.post("/reset", sendPasswordResetOTP);
-
-
+userRouter.post("/password-verify", verifyPasswordResetOTP, userPasswordReset);
+userRouter.post("/password-reset", sendPasswordResetOTP);
 
 //Secure routes
 userRouter.post("/logout", isUserLoggedin, userLogout);

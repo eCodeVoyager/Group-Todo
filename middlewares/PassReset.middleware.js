@@ -82,8 +82,14 @@ const verifyPasswordResetOTP = asyncHandler(async (req, res, next) => {
       throw new ApiError(400, "Invalid OTP", "Invalid OTP for password reset");
     }
   } catch (error) {
-    next(new ApiError(500, "Internal Server Error", error.message));
+    throw new ApiError(
+      500,
+      "Internal Server Error",
+      "Failed to verify password reset OTP || " + error.message || ""
+    );
+
   }
+  next();
 });
 
 module.exports = { sendPasswordResetOTP, verifyPasswordResetOTP };
