@@ -127,7 +127,7 @@ Returns a message indicating that the user is authorized to access the route.
 
 ## Verify Email
 
-### Endpoint: `GET [{BaseURL}]/api/v1/user/verify-email`
+### Endpoint: `GET [{BaseURL}]/verify-email`
 
 Verifies the user's email address.
 
@@ -144,7 +144,7 @@ Verifies the user's email address.
 
 ## Generate Verification Token
 
-### Endpoint: `POST [{BaseURL}]/api/v1/user/generate-verification-token`
+### Endpoint: `POST [{BaseURL}]/generate-verification-token`
 
 Generates an email verification token.
 
