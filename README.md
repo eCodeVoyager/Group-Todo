@@ -64,7 +64,7 @@ Logs out the currently logged-in user.
 
 ## User Password Reset
 
-### Endpoint: `POST [{BaseURL}]/api/v1/user/reset`
+### Endpoint: `POST [{BaseURL}]/api/v1/user/password-reset`
 
 Resets the password for a user.
 
@@ -84,7 +84,7 @@ Resets the password for a user.
 
 ## Verify Email
 
-### Endpoint: `POST [{BaseURL}]/api/v1/user/verify`
+### Endpoint: `POST [{BaseURL}]/api/v1/user/password-verify`
 
 Verifies the user's email address.
 
