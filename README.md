@@ -123,5 +123,127 @@ Returns a message indicating that the user is authorized to access the route.
 - **Body:**
   - `message`: "You are authorized to access this route"
 
+# User Verification APIs
+
+## Verify Email
+
+### Endpoint: `GET [{BaseURL}]/api/v1/user/verify-email`
+
+Verifies the user's email address.
+
+#### Request:
+
+- **Method:** `GET`
+
+#### Response:
+
+- **Status Code:** 200 OK
+- **Body:**
+  - `success`: `true`
+  - `message`: "Email verified successfully."
+
+## Generate Verification Token
+
+### Endpoint: `POST [{BaseURL}]/api/v1/user/generate-verification-token`
+
+Generates an email verification token.
+
+#### Request:
+
+- **Method:** `POST`
+- **Body:**
+  - `email` (string, required): User's email address.
+
+#### Response:
+
+- **Status Code:** 200 OK
+- **Body:**
+  - `success`: `true`
+  - `message`: "Email verification token generated successfully."
+# Note Management APIs
+
+## Note Model
+
+- **title** (string, required): Title of the note.
+- **content** (string): Content of the note.
+- **category** (string, default: "Uncategorized"): Category of the note.
+
+## Note Controller
+
+### Create a New Note
+
+- **Endpoint:** `POST /api/v1/note/create`
+- **Request:**
+  - **Required:**
+    - `title` (string): Title of the note.
+  - **Optional:**
+    - `content` (string): Content of the note.
+- **Response:**
+  - `success` (boolean): `true`
+  - `data` (object): Created note details.
+  - `message` (string): "Note created successfully"
+
+### Update a Note
+
+- **Endpoint:** `PUT /api/v1/note/update/:id`
+- **Request:**
+  - **Optional:**
+    - `title` (string): New title of the note.
+    - `content` (string): New content of the note.
+- **Response:**
+  - `success` (boolean): `true`
+  - `data` (object): Updated note details.
+  - `message` (string): "Note updated successfully"
+
+### Delete a Note
+
+- **Endpoint:** `DELETE /api/v1/note/delete/:id`
+- **Response:**
+  - `success` (boolean): `true`
+  - `message` (string): "Note deleted successfully"
+
+### Get All Notes
+
+- **Endpoint:** `GET /api/v1/note/getnotes`
+- **Response:**
+  - `success` (boolean): `true`
+  - `data` (array): Array of notes.
+
+### Get a Single Note
+
+- **Endpoint:** `GET /api/v1/note/getnote/:id`
+- **Response:**
+  - `success` (boolean): `true`
+  - `data` (object): Note details.
+
+## Note Router
+
+- **Create a Note:**
+  - **Endpoint:** `POST /api/v1/note/create`
+  - **Body:**
+    - `title` (string, required): Title of the note.
+    - `content` (string): Content of the note.
+
+- **Update a Note:**
+  - **Endpoint:** `PUT /api/v1/note/update/:id`
+  - **Body:**
+    - `title` (string): New title of the note.
+    - `content` (string): New content of the note.
+
+- **Delete a Note:**
+  - **Endpoint:** `DELETE /api/v1/note/delete/:id`
+
+- **Get All Notes:**
+  - **Endpoint:** `GET /api/v1/note/getnotes`
+
+- **Get a Single Note:**
+  - **Endpoint:** `GET /api/v1/note/getnote/:id`
+
+- **Route Not Found:**
+  - **Response:**
+    - `success` (boolean): `false`
+    - `error` (string): "Route not found"
+
+Please replace `[{BaseURL}]` with the actual base URL where your API is hosted. Adjust the documentation according to your specific requirements and conventions.
 
 
