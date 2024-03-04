@@ -25,60 +25,64 @@ const generateAccessAndRefreshToken = async (userId) => {
   }
 };
 
-// User registration controller
+// User registration controller (Caution: Complex Method Used)
 const userRegistration = asyncHandler(async (req, res) => {
   const { email, password, name } = req.body;
 
-  // Verify if email and password are provided
   if (!email || !password) {
     throw new ApiError(
-      400,
-      "Failed to create user",
+      422,
+      "User Registration Failed",
       "Missing email or password"
     );
   }
 
-  // Verify if email already exists
   const existingUser = await userModel.User.findOne({ email });
 
   if (existingUser) {
     throw new ApiError(
-      400,
-      "Failed To Create User",
+      422,
+      "User Registration Failed",
       "Email already used by another user"
     );
   }
 
-  // Verify if the password is at least 8 characters long
   if (password.length < 8) {
     throw new ApiError(
-      400,
-      "Failed To Create User",
+      422,
+      "User Registration Failed",
       "Password must be at least 8 characters long"
     );
   }
 
-  // Create user in the db
   const user = await userModel.User.create({
     email,
     password,
     name,
   });
+
   if (!user) {
-    throw new ApiError(500, "Failed to create user", "Database error occurred");
+    throw new ApiError(
+      500,
+      "User Registration Failed",
+      "Database error occurred"
+    );
   }
-  //Token generation
+
   const { accessToken, refreshToken } = await generateAccessAndRefreshToken(
     user._id
   );
+
   const loggedInUser = await userModel.User.findOne(user._id).select(
     "-password -refresh_token"
   );
-  //sending Cookies
+
   const options = {
     httpOnly: true,
-    secure: true,
+    secure: process.env.NODE_ENV === "production", // Only set secure in production
+    sameSite: "None", // Set SameSite to 'None' for cross-site cookies
   };
+
   return res
     .status(200)
     .cookie("refreshToken", refreshToken, options)
@@ -87,7 +91,7 @@ const userRegistration = asyncHandler(async (req, res) => {
       new ApiResponse(
         200,
         { loggedInUser, accessToken, refreshToken },
-        "User Register Successfully and Logged"
+        "User registered successfully and logged in"
       )
     );
 });
@@ -170,7 +174,7 @@ const userLogout = asyncHandler(async (req, res) => {
     });
 });
 
-//user Password reset controller
+//user Password reset controller(Caution: Complex Method Used)
 const userPasswordReset = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 
@@ -252,10 +256,24 @@ const verifyEmail = asyncHandler(async (req, res) => {
   });
 });
 
+//change User Bio controller
+const changeUserBio = asyncHandler(async (req, res) => {
+  const { bio } = req.body;
+  const user = await userModel.User.findById(req.user._id);
+  user.bio = bio;
+  await user.save();
+  throw new ApiResponse(
+    200,
+    { updatedBio: user.bio },
+    "Bio Updated Successfully"
+  );
+});
+
 module.exports = {
   userRegistration,
   userLogin,
   userLogout,
   userPasswordReset,
   verifyEmail,
+  changeUserBio,
 };

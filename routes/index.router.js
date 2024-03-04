@@ -5,10 +5,8 @@ const { generateVerificationToken } = require("../middlewares/mailsender.middlew
 var indexRouter = express.Router();
 
 indexRouter.get("/", JokeArray);
-//indexRouter.put("*/", JokeArray);
 indexRouter.post("/", JokeArray);
-//indexRouter.patch("*/", JokeArray);
-//indexRouter.delete("*/", JokeArray);
+
 indexRouter.get("/verify-email", verifyEmail);
 indexRouter.post("/generate-verification-token", generateVerificationToken);
 

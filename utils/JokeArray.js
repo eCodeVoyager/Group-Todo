@@ -1,8 +1,8 @@
-const JokeArray = async (req, res) => {
+const JokeArray = (_, res) => {
   res.json({
     success: true,
     error: true,
-    message: "Joke On You Salman || Sanaur Bhai. Read APIs Doc :) !",
+    message: "Please Read APIs Doc :) !",
   });
 };
 
